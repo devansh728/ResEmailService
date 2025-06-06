@@ -1,23 +1,27 @@
-# Email Service
+# Resilient Email Sending Service
 
-A resilient, idempotent, and extensible email sending service for Node.js, implementing SOLID principles. Features include circuit breakers, retries with exponential backoff, provider failover, rate limiting, and a processing queue.
+A robust, extensible, and testable email sending service in JavaScript, designed with SOLID principles. This project demonstrates advanced patterns such as retries with exponential backoff, provider failover, idempotency, rate limiting, circuit breaker, logging, and queueing—all using mock providers for demonstration and testing.
 
 ## Features
 
-- **Multiple Providers**: Easily add or swap email providers.
-- **Circuit Breaker**: Prevents repeated calls to failing providers.
-- **Rate Limiting**: Each provider enforces its own request limits.
-- **Retry with Exponential Backoff**: Retries failed sends with increasing delay.
-- **Provider Failover**: Automatically switches to backup providers on repeated failure.
-- **Idempotency**: Prevents duplicate email sends.
-- **Queueing**: Handles concurrent send requests in order.
-- **SOLID Principles**: Codebase is modular, extensible, and testable.
+- **Retry Mechanism**: Retries failed email sends with exponential backoff.
+- **Provider Fallback**: Automatically switches to a backup provider after repeated failures.
+- **Idempotency**: Prevents duplicate email sends for the same request.
+- **Rate Limiting**: Each provider enforces its own request-per-minute limit.
+- **Status Tracking**: Tracks and exposes the status of each email send attempt.
+- **Circuit Breaker**: Prevents repeated calls to failing providers, allowing recovery after a timeout.
+- **Simple Logging**: Logs attempts and errors for observability.
+- **Queue System**: Handles concurrent send requests in order, ensuring reliability under load.
+- **SOLID Principles**: Modular, extensible, and testable codebase.
 
 ## Project Structure
 
 ```
 resEmailSender/
 ├── package.json
+├── README.md
+├── examples/
+│   └── basicUsage.cjs
 ├── src/
 │   ├── index.js
 │   ├── core/
@@ -25,7 +29,6 @@ resEmailSender/
 │   │   └── interfaces.js
 │   ├── Providers/
 │   │   ├── baseProvider.js
-│   │   ├── index.js
 │   │   ├── mockProviderA.js
 │   │   └── mockProviderB.js
 │   ├── services/
@@ -34,14 +37,12 @@ resEmailSender/
 │       ├── idempotency.js
 │       ├── logger.js
 │       └── validator.js
-├── examples/
-│   └── basicUsage.cjs
 ├── testNew/
 │   └── emailService.edge.test.js
 └── .gitignore
 ```
 
-## Getting Started
+## Setup Instructions
 
 ### Prerequisites
 - Node.js v16 or later
@@ -57,16 +58,19 @@ npm install
 npm start
 ```
 
-### Run Tests
+### Run All Tests
 ```powershell
 npm test
-# or to run only edge case tests
+```
+
+### Run Only Edge Case Tests
+```powershell
 npx jest testNew/emailService.edge.test.js
 ```
 
-## Usage
+## Usage Example
 
-See `examples/basicUsage.cjs` for a usage example. Basic pattern:
+See `examples/basicUsage.cjs` for a full example. Basic usage:
 
 ```js
 const { EmailService, MockProviderA, MockProviderB } = require('./src');
@@ -87,6 +91,12 @@ emailService.send(email)
   .catch(err => console.error(err));
 ```
 
+## Assumptions
+- Providers are mocked and do not send real emails.
+- Each email must have a unique `id` for idempotency.
+- Rate limits and failure rates are configurable per provider.
+- The service is designed for demonstration and extensibility, not production use.
+
 ## SOLID Principles Applied
 - **Single Responsibility**: Each class (provider, service, utility) has one responsibility.
 - **Open/Closed**: Add new providers by extending `BaseProvider` without modifying existing code.
@@ -94,12 +104,10 @@ emailService.send(email)
 - **Interface Segregation**: Provider interface is minimal and focused.
 - **Dependency Inversion**: `EmailService` depends on abstractions (provider interface), not concrete implementations.
 
-## Extending
-- Add new providers by extending `BaseProvider` and implementing the `send` method.
-- Plug new providers into `EmailService` via its constructor.
-
 ## Testing
-- Edge cases (provider switching, circuit breaker, queue, retries, idempotency) are covered in `testNew/emailService.edge.test.js`.
+- Comprehensive unit and edge case tests are provided in `testNew/emailService.edge.test.js`.
+- Run tests with `npm test` or target specific files with `npx jest`.
+
 
 ## License
 MIT
