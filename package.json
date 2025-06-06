@@ -1,0 +1,96 @@
+{
+  "name": "email-service",
+  "version": "1.0.0",
+  "description": "Resilient email sending service with circuit breakers, retries, and failover",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node examples/basicUsage.js",
+    "test": "NODE_ENV=test jest --coverage",
+    "test:unit": "NODE_ENV=test jest --coverage test/unit",
+    "test:integration": "NODE_ENV=test jest --coverage test/integration",
+    "test:e2e": "NODE_ENV=test jest test/e2e",
+    "test:watch": "NODE_ENV=test jest --watch",
+    "lint": "eslint src test examples --fix",
+    "format": "prettier --write src test examples",
+    "ci": "npm run lint && npm run format && npm test"
+  },
+  "dependencies": {
+    "uuid": "^9.0.0",
+    "winston": "^3.8.2"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "sinon": "^15.0.0",
+    "chai": "^4.3.0",
+    "sinon-chai": "^3.7.0",
+    "eslint": "^8.23.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-jest": "^27.0.4",
+    "prettier": "^2.7.1",
+    "supertest": "^6.2.4",
+    "@babel/core": "^7.19.1",
+    "@babel/preset-env": "^7.19.1",
+    "jest-extended": "^3.2.0",
+    "nodemon": "^2.0.20"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/",
+      "/examples/"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ],
+    "setupFilesAfterEnv": [
+      "jest-extended/all"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    }
+  },
+  "eslintConfig": {
+    "env": {
+      "node": true,
+      "es2021": true,
+      "jest": true
+    },
+    "extends": [
+      "eslint:recommended",
+      "plugin:jest/recommended",
+      "prettier"
+    ],
+    "parserOptions": {
+      "ecmaVersion": "latest",
+      "sourceType": "module"
+    },
+    "rules": {
+      "no-console": ["error", { "allow": ["warn", "error"] }],
+      "complexity": ["warn", 10],
+      "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }]
+    },
+    "overrides": [
+        {
+            "files": ["**/*.test.js", "examples/**"],
+            "rules": {
+            "no-console": "off",
+            "no-unused-vars": "off"
+            }
+        }
+    ]
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true,
+    "printWidth": 100,
+    "tabWidth": 2,
+    "trailingComma": "es5"
+  }
+}
