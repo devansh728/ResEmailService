@@ -3,9 +3,9 @@
 const chai = require('chai');
 const sinon = require('sinon');
 const { expect } = chai;
-const EmailService = require('../src/services/emailService');
-const MockProviderA = require('../src/Providers/mockProviderA');
-const MockProviderB = require('../src/Providers/mockProviderB');
+const EmailService = require('../src/services/emailService.js');
+const MockProviderA = require('../src/Providers/mockProviderA.js');
+const MockProviderB = require('../src/Providers/mockProviderB.js');
 
 describe('EmailService Edge Cases', function () {
   let service, providerA, providerB;

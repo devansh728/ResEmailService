@@ -4,7 +4,7 @@ const { EmailService, MockProviderA, MockProviderB } = require('../src/index.js'
 // Helper function for pretty printing
 function printResults(result, history) {
   console.log('\n=== Email Service Results ===');
-  console.log(`Final Status: ${result.success ? '✅ Success' : '❌ Failed'}`);
+  console.log(`Final Status: ${result.success ? ' Success' : ' Failed'}`);
   console.log(`Provider Used: ${result.provider}`);
   console.log(`Message: ${result.message}\n`);
 
@@ -14,7 +14,7 @@ function printResults(result, history) {
     Timestamp: attempt.timestamp.toISOString(),
     Provider: attempt.provider,
     Attempt: attempt.attemptNumber,
-    Status: attempt.success ? '✅ Success' : '❌ Failed',
+    Status: attempt.success ? ' Success' : ' Failed',
     'Error Message': attempt.error || 'N/A',
     'Backoff Used': attempt.attemptNumber > 1 ? 
       `${1000 * Math.pow(2, attempt.attemptNumber - 2)}ms` : 'None'
@@ -66,7 +66,7 @@ async function demonstrateEmailService() {
     console.log(`Duplicate send result: ${duplicateResult.message}`);
 
   } catch (error) {
-    console.error('\n❌ Critical Error:', error.message);
+    console.error('\n Critical Error:', error.message);
     if (error.constructor.name !== 'Error') {
       console.error('Full Error:', error);
     }

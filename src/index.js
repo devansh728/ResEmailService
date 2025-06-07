@@ -1,4 +1,4 @@
-const EmailService = require('./services/emailService');
+const EmailService = require('./services/emailService.js');
 const { MockProviderA, MockProviderB } = require('./Providers');
 
 module.exports = {

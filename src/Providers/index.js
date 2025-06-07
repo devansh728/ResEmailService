@@ -1,5 +1,5 @@
-const MockProviderA = require('./mockProviderA');
-const MockProviderB = require('./mockProviderB');
+const MockProviderA = require('./mockProviderA.js');
+const MockProviderB = require('./mockProviderB.js');
 
 module.exports = {
   MockProviderA,

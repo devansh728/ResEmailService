@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Resilient email sending service with circuit breakers, retries, and failover",
   "main": "src/index.js",
-  "type": "module",
   "scripts": {
     "start": "node examples/basicUsage.js",
     "test": "NODE_ENV=test jest --coverage",
