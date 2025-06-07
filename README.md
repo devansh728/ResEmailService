@@ -136,6 +136,15 @@ This project helped me strengthen my understanding of:
 
  * Resilient architecture principles
 
+## Future Improvements
+
+ * Integration with third-party email APIs (like SES)
+
+ * Real-time dashboard for email status
+
+ * Email template system with handlebars or MJML
+
+ * Rate limiting and throttling for burst protection
 
 ## License
 MIT
